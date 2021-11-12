@@ -23,31 +23,31 @@ function readLine() {
 }
 
 /*
- * Complete the 'aVeryBigSum' function below.
+ * Complete the 'timeConversion' function below.
  *
- * The function is expected to return a LONG_INTEGER.
- * The function accepts LONG_INTEGER_ARRAY ar as parameter.
+ * The function is expected to return a STRING.
+ * The function accepts STRING s as parameter.
  */
 
-function aVeryBigSum(ar) {
-    // Write your code here
-    let sum = 0;
-    for(let val of ar){
-        sum+= val;
-    }
+function timeConversion(s) {
+    let AMPM = s.slice(-2);
+    let timeArr = s.slice(0, -2).split(":");
     
-    return sum;
+    if (AMPM === "AM" && timeArr[0] === "12") {
+        timeArr[0] = "00";
+    } else if (AMPM === "PM") {
+        timeArr[0] = (timeArr[0] % 12) + 12
+    }
+    return timeArr.join(":");
 
 }
 
 function main() {
     const ws = fs.createWriteStream(process.env.OUTPUT_PATH);
 
-    const arCount = parseInt(readLine().trim(), 10);
+    const s = readLine();
 
-    const ar = readLine().replace(/\s+$/g, '').split(' ').map(arTemp => parseInt(arTemp, 10));
-
-    const result = aVeryBigSum(ar);
+    const result = timeConversion(s);
 
     ws.write(result + '\n');
 

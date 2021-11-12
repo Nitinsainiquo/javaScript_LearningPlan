@@ -23,37 +23,38 @@ function readLine() {
 }
 
 /*
- * Complete the 'compareTriplets' function below.
+ * Complete the 'gradingStudents' function below.
  *
  * The function is expected to return an INTEGER_ARRAY.
- * The function accepts following parameters:
- *  1. INTEGER_ARRAY a
- *  2. INTEGER_ARRAY b
+ * The function accepts INTEGER_ARRAY grades as parameter.
  */
 
-function compareTriplets(a, b) {
+function gradingStudents(grades) {
     // Write your code here
-    let alice = 0;
-    let bob = 0;
-    for(let i = 0;i<=a.length;i++){
-        if(a[i]>b[i]) alice++;
-        else if(b[i]>a[i]) bob++;
-        else continue;
+    for(let i=0;i<=grades.length;i++){
+        if(grades[i]>=38&&grades[i]%5>2){
+            grades[i] = grades[i]+(5-(grades[i]%5));
+        }  
     }
-    return [alice,bob];
+    return grades;
 
 }
 
 function main() {
     const ws = fs.createWriteStream(process.env.OUTPUT_PATH);
 
-    const a = readLine().replace(/\s+$/g, '').split(' ').map(aTemp => parseInt(aTemp, 10));
+    const gradesCount = parseInt(readLine().trim(), 10);
 
-    const b = readLine().replace(/\s+$/g, '').split(' ').map(bTemp => parseInt(bTemp, 10));
+    let grades = [];
 
-    const result = compareTriplets(a, b);
+    for (let i = 0; i < gradesCount; i++) {
+        const gradesItem = parseInt(readLine().trim(), 10);
+        grades.push(gradesItem);
+    }
 
-    ws.write(result.join(' ') + '\n');
+    const result = gradingStudents(grades);
+
+    ws.write(result.join('\n') + '\n');
 
     ws.end();
 }
